@@ -1,15 +1,14 @@
 {
     "name": "@dannysilence/cypress-commands-log",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "",
     "main": "index.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\""
+        "test": "echo \"Error: no test specified\""
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
-      "cypress": "10.6.0"
+        "cypress": "10.6.0"
     }
-  }
-  
+}
