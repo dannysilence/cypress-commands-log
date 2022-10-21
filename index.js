@@ -155,7 +155,7 @@ function onFinish () {
   }
 
   this.currentTest.commandsLogs = testCommands;
-  debugger
+  
   const filepath = writeTestInfo(info)
   console.log('saving the log file %s', filepath)
   info.filepath = filepath
