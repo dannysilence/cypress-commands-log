@@ -74,6 +74,8 @@ function startLogging () {
 
   Cypress.on('test:before:run', () => {
     debug('before test run')
+   
+    loggedCommands = []
     savingCommands = true
   })
 
@@ -104,9 +106,9 @@ function startLogging () {
   })
 }
 
-function initLog () {
-  loggedCommands = []
-}
+//function initLog () {
+//  loggedCommands = []
+//}
 
 function onFinish () {
   savingCommands = false
@@ -163,6 +165,7 @@ function onFinish () {
 }
 
 const _afterEach = afterEach
+const _beforeEach = beforeEach
 
 afterEach = (name, fn) => {
   if (typeof name === 'function') {
@@ -177,5 +180,5 @@ afterEach = (name, fn) => {
 }
 
 startLogging()
-beforeEach(initLog)
+//beforeEach(initLog)
 _afterEach(onFinish)
