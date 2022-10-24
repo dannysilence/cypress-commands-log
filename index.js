@@ -165,7 +165,7 @@ function onFinish () {
 }
 
 const _afterEach = afterEach
-const _beforeEach = beforeEach
+//const _beforeEach = beforeEach
 
 afterEach = (name, fn) => {
   if (typeof name === 'function') {
