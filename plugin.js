@@ -1,8 +1,12 @@
 module.exports.configure = function (on) {
     on('task', {
-      writeCommands: (commands) => {
-        console.log("Executed commands:")
-        console.table(commands);
+      console: (method, data) => {
+        if(method === 'table') {
+            console.table(data);
+        } else 
+        if(method === 'log') {
+            console.log(data);
+        }
       }
     })
   }
