@@ -86,7 +86,7 @@ var configure = (on, config, settings = {enabled: false, writeToConsole: false, 
 
           if(testStarted === false) {
             testStarted = true
-            if(settings.writeToConsole) {
+            if(settings.enabled === true && settings.writeToConsole === true) {
               const test = this.currentTest.title;
               cy.task('writeTestCommand', {type: 'testStart', data: test}, {log:false})
             }
@@ -103,7 +103,7 @@ var configure = (on, config, settings = {enabled: false, writeToConsole: false, 
             debug(log)
             loggedCommands.push(log)
 
-            if(settings.writeToConsole) {
+            if(settings.enabled === true && settings.writeToConsole === true) {
               cy.task('writeTestCommand', {type: 'testStep', data: log}, {log:false})
             }
           }
@@ -149,7 +149,7 @@ var configure = (on, config, settings = {enabled: false, writeToConsole: false, 
 
         writeTestInfo(info)
         testStarted = false
-        if(settings.writeToConsole) {
+        if(settings.enabled === true && settings.writeToConsole === true) {
           const test = this.currentTest.title;
           cy.task('writeTestCommand', {type: 'testEnd', data: test}, {log:false})
         }
