@@ -139,7 +139,7 @@ var configure = (on, config, settings = {enabled: false, writeToConsole: false, 
         const specName = Cypress.spec.relative
 
         const info = {
-          specName: specName.replace(/cypress[\/|\\]e2e[\/|\\]/g, "").replace(/\.cy\.[j|t]s/g),
+          specName: specName.replace(/cypress[\/|\\]e2e[\/|\\]/g, '').replace(/\.cy\.[j|t]s/g, ''),
           title,
           suiteName,
           testName,
