@@ -4,7 +4,7 @@
 
 const fs = require('fs')
 const path = require('path')
-const debug = require('debug')('cypress-failed-log')
+const debug = require('debug')('cypress-commands-log')
 
 // check built-in module against missing methods
 if (typeof path.basename !== 'function') {
