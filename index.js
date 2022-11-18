@@ -1,18 +1,16 @@
-/// <reference types="cypress" />
-// @ts-check
-'use strict'
+module.exports.configure = ({enabled:false, writeToConsole: true, writeToFile: true }) => {
 
-const fs = require('fs')
-const path = require('path')
-const debug = require('debug')('cypress-commands-log')
+  const fs = require('fs')
+  const path = require('path')
+  const debug = require('debug')('cypress-commands-log')
 
-// check built-in module against missing methods
-if (typeof path.basename !== 'function') {
-  throw new Error('path.basename should be a function')
-}
+  // check built-in module against missing methods
+  if (typeof path.basename !== 'function') {
+    throw new Error('path.basename should be a function')
+  }
 
-const getFilepath = filename => path.join('cypress', 'logs', filename)
-// const retriesTimes = getRetriesTimes()
+  const getFilepath = filename => path.join('cypress', 'logs', filename)
+  // const retriesTimes = getRetriesTimes()
 
 // function getRetriesTimes() {
 //   const retries = Cypress.config('retries')
@@ -53,13 +51,18 @@ function writeTestInfo({
   // @ts-ignore
   specData.tests.push(info);
 
-  const str = JSON.stringify(specData, null, 2) + '\n'
-  const filename = specName.includes("\\") ? specName.replace("\\", "/") + `.json` : specName + '.json';
-  const filepath = getFilepath(filename)
+  if(writeToFile === true) {
+    const str = JSON.stringify(specData, null, 2) + '\n'
+    const filename = specName.includes("\\") ? specName.replace("\\", "/") + `.json` : specName + '.json';
+    const filepath = getFilepath(filename)
 
-  cy.writeFile(filepath, str, { log: false })
-
-  return filepath
+    cy.writeFile(filepath, str, { log: false })
+  }
+  if(writeToConsole === true) {
+    console.log('Executed Commands:');
+    //console.table(info);
+    cy.console('table', info);
+  }
 }
 
 let savingCommands = false
@@ -126,24 +129,8 @@ function onFinish() {
   const testCommands = loggedCommands
   const specName = Cypress.spec.relative
 
-  // console.log('=== test failed ===')
-  // console.log(specName)
-  // console.log('=== title ===')
-  // console.log(title)
-  // if (suiteName) {
-  //   console.log('suite', suiteName)
-  // }
-  // console.log(testName)
-  // console.log('=== error ===')
-  // console.log(testError)
-  // console.log('=== commands ===')
-  // console.log(testCommands.join('\n'))
-
-  let base1 = "cypress\\e2e\\";
-  let base2 = "cypress/e2e/";
-
   const info = {
-    specName: specName.includes(base1) || specName.includes(base2) ? (specName.includes(base1) ? specName.replace(base1, "") : specName.replace(base2, "")) : specName,
+    specName: specName.replace(/cypress[\/|\\]e2e[\/|\\]/g, "").replace(/\.cy\.[j|t]s/g),
     title,
     suiteName,
     testName,
@@ -157,20 +144,23 @@ function onFinish() {
   // console.log('saving the log file %s', filepath)
   // info.filepath = filepath
 }
+  
+  if(enabled === true) {
+    const _afterEach = afterEach
 
-const _afterEach = afterEach
+    afterEach = (name, fn) => {
+      if (typeof name === 'function') {
+        fn = name
+        name = fn.name
+      }
 
-afterEach = (name, fn) => {
-  if (typeof name === 'function') {
-    fn = name
-    name = fn.name
+      _afterEach(name, function () {
+        onFinish.call(this)
+        fn.call(this)
+      })
+    }
+
+    startLogging()
+    _afterEach(onFinish)
   }
-
-  _afterEach(name, function () {
-    onFinish.call(this)
-    fn.call(this)
-  })
 }
-
-startLogging()
-_afterEach(onFinish)
