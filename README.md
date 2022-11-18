@@ -7,7 +7,30 @@ Based on https://github.com/bahmutov/cypress-failed-log
 ## Usage
 In your support/e2e.js (support/e2e.ts) add the following line:
 ```javascript
-import '@dannysilence/cypress-commands-log';
+
+
+import * as commandLogs from '@dannysilence/cypress-commands-log';
+commandLogs.configure(Cypress, Cypress.config, {enabled: true, writeToConsole: true, writeToFile: true});
+
+```
+
+And in `cypress.config.js` update `setupNodeEvents` function:
+```javasccript
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  defaultCommandTimeout: 500,
+  e2e: {
+    setupNodeEvents(on, config) {
+      require('@dannysilence/cypress-commands-log')
+        .configure(on, config, {enabled: true, writeToConsole: true, writeToFile: true});
+    },
+  },
+})
+
+
+
+
 ```
 
 ##  Output
