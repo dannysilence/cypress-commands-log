@@ -103,6 +103,8 @@ var configure = (on, config, settings = {enabled: false, writeToConsole: false, 
             debug(log)
             loggedCommands.push(log)
 
+            ///currentTest.consoleOutputs = (currentTest.consoleOutputs || []).concat(log);
+
             if(settings.enabled === true && settings.writeToConsole === true) {
               cy.task('writeTestCommand', {type: 'testStep', data: log}, {log:false})
             }
