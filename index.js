@@ -59,9 +59,8 @@ function writeTestInfo({
     cy.writeFile(filepath, str, { log: false })
   }
   if(writeToConsole === true) {
-    console.log('Executed Commands:');
-    //console.table(info);
-    cy.console('table', info);
+    cy.task('log', 'Executed Commands:');
+    cy.task('table', info);
   }
 }
 
