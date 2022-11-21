@@ -181,4 +181,4 @@ var configure = (on, config, settings = {enabled: false, writeToConsole: false, 
     return config;
 }
 
-module.exports.configure = configure();
+module.exports.configure = configure;
