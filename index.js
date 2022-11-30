@@ -54,7 +54,7 @@ function writeTestInfo({
   specData.tests.push(info);
 
   const str = JSON.stringify(specData, null, 2) + '\n'
-  const filename = specName.replaceAll(/\\/g, '/').replaceAll(/cy\.[t|j]s/g, '') + '.json';
+  const filename = specName.replaceAll(/\\/g, '/').replaceAll(/cy\.[t|j]s\./g, '') + '.json';
   const filepath = getFilepath(filename)
 
   cy.writeFile(filepath, str, { log: false })
