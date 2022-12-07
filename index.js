@@ -43,7 +43,7 @@ function writeTestInfo({
     // title: title,
     // suite: suiteName,
     test: testName,
-    commands: Cypress._.map(testCommands, c => c.message)
+    commands: Cypress._.map(testCommands, c => c.message).filter(m=>m.trim()!=='screenshot')
   }
   if (testError) {
     info.error = testError;
